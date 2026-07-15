@@ -33,15 +33,50 @@
 
 @ Here is the actual aprajapati3982_lab6 function
 aprajapati3982_lab6:
-    push {lr}
 
-    mov r0, #0                  @ BUTTON_USER
-    bl BSP_PB_GetState          @ Read button state
+    @ Save registers that will be modified
+    push {r4,r5,r6,lr}
 
-    pop {lr}
+    mov r4,#7               @ Initalize loop index to LED 7
+    mov r5,#0               @ Initalize toggle counter to 0
+    mov r6,r0               @ Save delay value passed from C
+
+loop:
+
+    @Check if loop index is below 0
+    cmp r4,#0
+    bge toggle_led
+
+    @ Reset loop index back to LED 7
+    mov r4,#7
+
+toggle_led:
+
+    mov r0,r4               @ Toogle the current LED
+    bl BSP_LED_Toggle
+
+    add r5,r5,#1            @ Increment toggle counter
+    subs r4,r4,#1           @ Move to the next LED
+
+    @ Delay using the value passed from C
+    mov r0,r6             
+    bl busy_delay
+
+    @ Read the USER button state
+    mov r0,#0               @ BUTTON_USER
+    bl BSP_PB_GetState
+
+    @ If button is not pressed, continue looping
+    cmp r0,#0
+    beq loop
+
+    @ Return total number of LED toggles
+    mov r0,r5
+
+    @ Restore registers and return
+    pop {r4,r5,r6,lr}
     bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
     .size   aprajapati3982_lab6, .-aprajapati3982_lab6    @@ - symbol size (not strictly required, but makes the debugger happy)
-
 
 .global aprajapati3982_a3
 .type   aprajapati3982_a3, %function

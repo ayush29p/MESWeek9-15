@@ -24,7 +24,19 @@ void Lab6_aprajapati3982(int action)
 
     return;
   }
-  printf("aprajapati3982_lab6 returned: %d\n", aprajapati3982_lab6(99, 87) );
+
+int fetch_status;
+uint32_t delay;
+
+fetch_status = fetch_uint32_arg(&delay);
+
+if (fetch_status)
+{
+    delay = 500000;
+}
+
+printf("aprajapati3982_lab6 returned: %d\n",
+       aprajapati3982_lab6(delay, 0));
 }
 
 ADD_CMD("aprajapati3982_lab6", Lab6_aprajapati3982,"Test the new lab 6 function")
