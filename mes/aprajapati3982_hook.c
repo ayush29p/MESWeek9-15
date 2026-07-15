@@ -2,16 +2,16 @@
  *  C to assembler menu hook
  *
  *  Modified by aprajapati3982
- * 
+ *
  */
-
+ 
 #include <stdio.h>
 #include <stdint.h>
 #include <ctype.h>
 
 #include "common.h"
 
-int aprajapati3982_lab6(int x, int y);
+int aprajapati3982_lab6(uint32_t delay, int unused);
 
 void Lab6_aprajapati3982(int action)
 {
@@ -19,9 +19,8 @@ void Lab6_aprajapati3982(int action)
   if(action==CMD_SHORT_HELP) return;
   if(action==CMD_LONG_HELP) {
     printf("Lab 6\n\n"
-	   "This command tests new lab 6 function by aprajapati3982\n"
-	   );
-
+       "Toggle LEDs until the USER button is pressed.\n"
+       "Returns the total number of LED toggles.\n");
     return;
   }
 
@@ -39,7 +38,8 @@ printf("aprajapati3982_lab6 returned: %d\n",
        aprajapati3982_lab6(delay, 0));
 }
 
-ADD_CMD("aprajapati3982_lab6", Lab6_aprajapati3982,"Test the new lab 6 function")
+ADD_CMD("aprajapati3982_lab6", Lab6_aprajapati3982,
+        "Run the Lab 6 LED toggle function")
 
 int aprajapati3982_a3(char *pattern_ptr);
 

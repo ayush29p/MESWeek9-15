@@ -25,34 +25,38 @@
 
     .type   aprajapati3982_lab6, %function   @ Declares that the symbol is a function (not strictly required)
 
-@ Function Declaration : int aprajapati3982_lab6(int x, int y)
+@ Function Declaration : int aprajapati3982_lab6(uint32_t delay, int unused)
 @
-@ Input: r0, r1 (i.e. r0 holds x, r1 holds y)
-@ Returns: r0
-@ 
+@ Input: 
+@       r0 = delay value from C
+@       r1 = unused
+@ Returns: 
+@       r0 = number of LED toggles
 
-@ Here is the actual aprajapati3982_lab6 function
+@ Lab 6 function
+@ Toggles LEDs until the USER button is pressed.
+@ Returns the total number of LED toggles.
 aprajapati3982_lab6:
 
     @ Save registers that will be modified
     push {r4,r5,r6,lr}
 
-    mov r4,#7               @ Initalize loop index to LED 7
+    mov r4,#7               @ Initialize loop index to LED 7
     mov r5,#0               @ Initalize toggle counter to 0
     mov r6,r0               @ Save delay value passed from C
 
 loop:
 
-    @Check if loop index is below 0
+    @ Check if loop index is below 0
     cmp r4,#0
     bge toggle_led
 
-    @ Reset loop index back to LED 7
+    @ Restart loop index back to LED 7
     mov r4,#7
 
 toggle_led:
 
-    mov r0,r4               @ Toogle the current LED
+    mov r0,r4               @ Toggle the current LED
     bl BSP_LED_Toggle
 
     add r5,r5,#1            @ Increment toggle counter
