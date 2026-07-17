@@ -82,6 +82,32 @@ toggle_led:
     bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
     .size   aprajapati3982_lab6, .-aprajapati3982_lab6    @@ - symbol size (not strictly required, but makes the debugger happy)
 
+@@ Function Header Block
+
+    .global aprajapati3982_lab7        @ Make the symbol name for the function visible to the linker
+    .type   aprajapati3982_lab7, %function   @ Declares that the symbol is a function (not strictly required)
+
+@ Function Declaration : int aprajapati3982_lab7(int x, int y)
+@
+@ Input: r0, r1 (i.e. r0 holds x, r1 holds y)
+@ Returns: r0
+@ 
+
+@ Here is the actual aprajapati3982_lab7 function
+aprajapati3982_lab7:
+    push {lr}
+
+    @ These lines just show that the code is working
+    ldr r0, =0xFFFFF
+    bl busy_delay
+
+    @ Get the state of the user button here.
+    @ Return the result to the calling C function
+
+    pop {lr}
+    bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
+    .size   aprajapati3982_lab7, .-aprajapati3982_lab7    @@ - symbol size (not strictly required)
+
 .global aprajapati3982_a3
 .type   aprajapati3982_a3, %function
 

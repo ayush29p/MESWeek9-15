@@ -8,7 +8,7 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <ctype.h>
-
+#include "stm32f3_discovery_gyroscope.h"
 #include "common.h"
 
 int aprajapati3982_lab6(uint32_t delay, int unused);
@@ -40,6 +40,40 @@ printf("aprajapati3982_lab6 returned: %d\n",
 
 ADD_CMD("aprajapati3982_lab6", Lab6_aprajapati3982,
         "Run the Lab 6 LED toggle function")
+
+int aprajapati3982_lab7(void);
+
+void Lab7_aprajapati3982(int action)
+{
+
+  if(action==CMD_SHORT_HELP) return;
+  if(action==CMD_LONG_HELP) {
+    printf("Lab 6\n\n"
+	   "This command tests new lab 7 function by aprajapati3982\n"
+	   );
+
+    return;
+  }
+
+  float xyz[3] = {0};
+
+  BSP_GYRO_GetXYZ(xyz);
+
+  printf("Gyroscope returns:\n"
+    "   X: %f\n"
+    "   Y: %f\n"
+    "   Z: %f\n",
+    xyz[0] / 256,
+    xyz[1] / 256,
+    xyz[2] / 256);
+
+  printf("aprajapati3982_lab7 returned: %d\n", aprajapati3982_lab7() );
+
+  
+}
+
+ADD_CMD("aprajapati3982_lab7", Lab7_aprajapati3982,"Test the new lab 7 function")
+
 
 int aprajapati3982_a3(char *pattern_ptr);
 
