@@ -122,17 +122,39 @@ aprajapati3982_lab7:
 @ Here is the function
 aprajapati3982_a3:
 
-    push {r4-r7, lr}
+    push {r4-r8, lr}
 
     mov r4, r0                  @ r4 = wait
     mov r5, r1                  @ r5 = current pattern pointer
     mov r6, r1                  @ r6 = start of pattern (for restarting)
     mov r7, r2                  @ r7 = number of repeats
+    mov r8, #0                  @ toggle counter
+
+pattern_loop:
 
     ldrb r0, [r5]               @ Load first character
+
+    cmp r0, #0                  @ End of string?
+    beq finished
+
     sub r0,r0, #'0'             @ Convert ASCII to integer
 
-    pop {r4-r7, lr}
+    bl BSP_LED_Toggle           @ Toggle the LED
+
+    add r8, r8, #1
+
+    mov r0, r4                  @ wait value
+    bl busy_delay
+
+    add r5, r5, #1              @ Next character
+
+    b pattern_loop
+
+finished:
+
+    mov r0, r8
+
+    pop {r4-r8, lr}
     bx lr
 
     .size   aprajapati3982_a3, .-aprajapati3982_a3
