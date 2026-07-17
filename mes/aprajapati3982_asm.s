@@ -109,15 +109,22 @@ aprajapati3982_lab7:
 .global aprajapati3982_a3
 .type   aprajapati3982_a3, %function
 
-@ Function Declaration: int aprajapati3982_a3(char *pattern_ptr)
+@ Function Declaration: int aprajapati3982_a3(uint32_t wait, char *pattern, uint32_t num)
 @
-@ Input: r0 (i.e. r0 is a pointer to the first character of the pattern)
-@ Returns: r0
-@ 
+@ Input:
+@   r0 = wait value
+@   r1 = pointer to pattern string
+@   r2 = number of repeats
+@
+@ Returns:
+@   r0 = number of LED toggles
 
 @ Here is the function
 aprajapati3982_a3:
 
+    push {lr}
+    mov r0,#0
+    pop {lr}
     bx lr
     .size   aprajapati3982_a3, .-aprajapati3982_a3
 
