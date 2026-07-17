@@ -57,18 +57,25 @@ void Lab7_aprajapati3982(int action)
 int fetch_status;
 uint32_t count;
 uint32_t delay;
+uint32_t axis;
 
 fetch_status = fetch_uint32_arg(&count);
 if(fetch_status)
-{
+  {
     count = 10;
-}
+  }
 
 fetch_status = fetch_uint32_arg(&delay);
 if(fetch_status)
-{
+  {
     delay = 500000;
-}
+  }
+
+fetch_status = fetch_uint32_arg(&axis);
+if(fetch_status)
+  {
+   axis = 0;
+  }
 
 float xyz[3] = {0};
 
@@ -76,19 +83,32 @@ for(uint32_t i = 0; i < count; i++)
 {
     BSP_GYRO_GetXYZ(xyz);
 
-    printf("Gyroscope returns:\n"
+    if(axis == 0)
+    {
+      printf("Gyroscope returns:\n"
            " X: %f\n"
            " Y: %f\n"
            " Z: %f\n",
            xyz[0] / 256,
            xyz[1] / 256,
            xyz[2] / 256);
-
+    }
+    else if(axis == 1)
+    {
+    printf("X: %f\n", xyz[0] / 256);
+    }
+    else if(axis == 2)
+    {
+    printf("Y: %f\n", xyz[1] / 256);
+    }
+    else if(axis == 3)
+    {
+    printf("Z: %f\n", xyz[2] / 256);
+    }
     aprajapati3982_lab7(delay);
-}
-  
-}
+  }
 
+}
 ADD_CMD("aprajapati3982_lab7", Lab7_aprajapati3982,"Test the new lab 7 function")
 
 
