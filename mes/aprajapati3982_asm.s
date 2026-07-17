@@ -122,20 +122,21 @@ aprajapati3982_lab7:
 @ Here is the function
 aprajapati3982_a3:
 
-    push {r4-r8, lr}
+    push {r4-r9, lr}
 
     mov r4, r0                  @ r4 = wait
     mov r5, r1                  @ r5 = current pattern pointer
     mov r6, r1                  @ r6 = start of pattern (for restarting)
     mov r7, r2                  @ r7 = number of repeats
     mov r8, #0                  @ toggle counter
+    mov r9, #0                  @ repeat counter
 
 pattern_loop:
 
     ldrb r0, [r5]               @ Load first character
 
     cmp r0, #0                  @ End of string?
-    beq finished
+    beq end_pattern
 
     sub r0,r0, #'0'             @ Convert ASCII to integer
 
@@ -150,11 +151,21 @@ pattern_loop:
 
     b pattern_loop
 
+end_pattern:
+
+    add r9, r9, #1              @ One complete pattern finished
+
+    cmp r9, r7                  @ Done all repeats?
+    beq finished
+
+    mov r5, r6                  @ Restart at beginning of pattern
+    b pattern_loop
+
 finished:
 
     mov r0, r8
 
-    pop {r4-r8, lr}
+    pop {r4-r9, lr}
     bx lr
 
     .size   aprajapati3982_a3, .-aprajapati3982_a3
