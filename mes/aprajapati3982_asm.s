@@ -122,10 +122,18 @@ aprajapati3982_lab7:
 @ Here is the function
 aprajapati3982_a3:
 
-    push {lr}
-    mov r0,#0
-    pop {lr}
+    push {r4-r7, lr}
+
+    mov r4, r0                  @ r4 = wait
+    mov r5, r1                  @ r5 = current pattern pointer
+    mov r6, r1                  @ r6 = start of pattern (for restarting)
+    mov r7, r2                  @ r7 = number of repeats
+
+    mov r0, #0                  @ temporary return value
+
+    pop {r4-r7, lr}
     bx lr
+    
     .size   aprajapati3982_a3, .-aprajapati3982_a3
 
 @ Function Declaration: int busy_delay(int cycles)
