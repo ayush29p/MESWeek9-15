@@ -87,18 +87,16 @@ toggle_led:
     .global aprajapati3982_lab7        @ Make the symbol name for the function visible to the linker
     .type   aprajapati3982_lab7, %function   @ Declares that the symbol is a function (not strictly required)
 
-@ Function Declaration : int aprajapati3982_lab7(int x, int y)
+@ Function Declaration : int aprajapati3982_lab7(uint32_t delay)
 @
-@ Input: r0, r1 (i.e. r0 holds x, r1 holds y)
-@ Returns: r0
-@ 
+@ Input: r0 = delay value
+@ Returns: r0 = 0
 
 @ Here is the actual aprajapati3982_lab7 function
 aprajapati3982_lab7:
     push {lr}
 
-    @ These lines just show that the code is working
-    ldr r0, =0xFFFFF
+    @ r0 already contains the delay value
     bl busy_delay
 
     @ Get the state of the user button here.
