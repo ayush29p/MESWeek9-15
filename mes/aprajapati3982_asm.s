@@ -129,11 +129,12 @@ aprajapati3982_a3:
     mov r6, r1                  @ r6 = start of pattern (for restarting)
     mov r7, r2                  @ r7 = number of repeats
 
-    mov r0, #0                  @ temporary return value
+    ldrb r0, [r5]               @ Load first character
+    sub r0,r0, #'0'             @ Convert ASCII to integer
 
     pop {r4-r7, lr}
     bx lr
-    
+
     .size   aprajapati3982_a3, .-aprajapati3982_a3
 
 @ Function Declaration: int busy_delay(int cycles)
