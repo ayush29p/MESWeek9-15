@@ -147,6 +147,13 @@ pattern_loop:
     mov r0, r4                  @ wait value
     bl busy_delay
 
+    @ Check USER button
+    mov r0, #0
+    bl BSP_PB_GetState
+
+    cmp r0, #0
+    bne finished
+
     add r5, r5, #1              @ Next character
 
     b pattern_loop
