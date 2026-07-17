@@ -112,7 +112,7 @@ for(uint32_t i = 0; i < count; i++)
 ADD_CMD("aprajapati3982_lab7", Lab7_aprajapati3982,"Test the new lab 7 function")
 
 
-int aprajapati3982_a3(char *pattern_ptr);
+int aprajapati3982_a3(uint32_t wait, char *pattern, uint32_t num);
 
 void A3_aprajapati3982(int action)
 {
@@ -120,23 +120,39 @@ void A3_aprajapati3982(int action)
   if(action==CMD_SHORT_HELP) return;
   if(action==CMD_LONG_HELP) {
     printf("Assignment 3 Test\n\n"
-	   "This is the A3 function by aprajapati3982\n"
+	         "Blink LEDs using a pattern.\n"
 	   );
 
     return;
   }
 
   int fetch_status;
+  uint32_t wait;
   char *pattern;
+  uint32_t num;
 
+  // Get wait value
+  fetch_status = fetch_uint32_arg(&wait);
+  if(fetch_status)
+  {
+    wait = 0xFFFFF;
+  }
+
+  // Get pattern string
   fetch_status = fetch_string_arg(&pattern);
 
   if (fetch_status) {
-    // Default logic goes here
-    pattern = "Test Pattern";
+    pattern = "11234";
   }
 
-  printf("aprajapati3982_a3 returned: %d\n", aprajapati3982_a3(pattern) );
+  // Get repeat count
+  fetch_status = fetch_uint32_arg(&num);
+  if(fetch_status) {
+    num = 5;
+  }
+
+   printf("Returned %d\n",
+    aprajapati3982_a3(wait, pattern, num));
 }
 
 ADD_CMD("aprajapati3982_a3", A3_aprajapati3982,"Run A3 for aprajapati3982")
