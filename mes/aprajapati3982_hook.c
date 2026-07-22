@@ -19,7 +19,6 @@
 void aprajapati3982_a4_btn(void);
 void aprajapati3982_a4_tick(void);
 
-
 // Timer tick hook for our timer interrupt
 // driven programming.
 //
