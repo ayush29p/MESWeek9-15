@@ -66,16 +66,23 @@ aprajapati3982_lab8:
 
 @ Here is the actual aprajapati3982_lab9 function
 aprajapati3982_lab9:
-    push {lr}
+    push {lr}                      @ Save the return address
 
-    @ These lines just show that the code is working
-    mov r0, #0
-    bl BSP_LED_Toggle
+    ldr r1, =LEDaddress            @ Load the address of the LED register
+    ldr r1, [r1]                   @ Get the actual GPIO register address
+    ldrh r0, [r1]                  @ Read the current LED state (16-bit)
+    orr r0, r0, #0x0100            @ Turn ON Led 4 by setting bit 8
+    strh r0, [r1]                  @ Write the new LED state back
 
-    mov r0, #0
+    mov r0, #0                     @ Return 0 to C
 
-    pop {lr}
-    bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
+    pop {lr}                       @ Restore the return address
+    bx lr                          @ Return (Branch exchange) to the address in the link register (lr) 
+ 
+ @ Memory address of GPIO Port E output register
+ LEDaddress:
+        .word 0x48001014
+
     .size   aprajapati3982_lab9, .-aprajapati3982_lab9    @@ - symbol size (not strictly required)
 
 @@ Function Header Block
