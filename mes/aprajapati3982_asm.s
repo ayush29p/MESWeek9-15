@@ -71,7 +71,7 @@ aprajapati3982_lab9:
     ldr r1, =LEDaddress            @ Load the address of the LED register
     ldr r1, [r1]                   @ Get the actual GPIO register address
     ldrh r0, [r1]                  @ Read the current LED state (16-bit)
-    orr r0, r0, #0x5500            @ Turn ON North, South, East and West LEDs
+    eor r0, r0, #0x5500            @ Toggle North, South, East and West LEDs
     strh r0, [r1]                  @ Write the new LED state back
 
     mov r0, #0                     @ Return 0 to C
