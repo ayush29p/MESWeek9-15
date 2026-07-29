@@ -53,11 +53,35 @@ aprajapati3982_lab8:
     bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
     .size   aprajapati3982_lab8, .-aprajapati3982_lab8    @@ - symbol size (not strictly required, but makes the debugger happy)
 
+@@ Function Header Block
 
+    .global aprajapati3982_lab9        @ Make the symbol name for the function visible to the linker
+    .type   aprajapati3982_lab9, %function   @ Declares that the symbol is a function (not strictly required)
 
+@ Function Declaration : int aprajapati3982_lab9(void)
+@
+@ Input: None
+@ Returns: r0
+@ 
 
-.global aprajapati3982_a4
-.type   aprajapati3982_a4, %function
+@ Here is the actual aprajapati3982_lab9 function
+aprajapati3982_lab9:
+    push {lr}
+
+    @ These lines just show that the code is working
+    mov r0, #0
+    bl BSP_LED_Toggle
+
+    mov r0, #0
+
+    pop {lr}
+    bx lr                           @ Return (Branch eXchange) to the address in the link register (lr) 
+    .size   aprajapati3982_lab9, .-aprajapati3982_lab9    @@ - symbol size (not strictly required)
+
+@@ Function Header Block
+
+    .global aprajapati3982_a4
+    .type   aprajapati3982_a4, %function
 
 @ Function Declaration : int aprajapati3982_a4(int x)
 @

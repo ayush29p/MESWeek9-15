@@ -80,6 +80,28 @@ void Lab8_aprajapati3982(int action)
 
 ADD_CMD("aprajapati3982_lab8", Lab8_aprajapati3982,"Test the new lab 8 function")
 
+int aprajapati3982_lab9(void);
+
+void Lab9_aprajapati3982(int action)
+{
+
+  if(action==CMD_SHORT_HELP) return;
+  if(action==CMD_LONG_HELP) {
+    printf("Lab 9\n\n"
+	   "This command tests new lab 9 function by aprajapati3982\n"
+	   );
+
+    return;
+  }
+
+  printf("aprajapati3982_lab9 returned: %d\n", aprajapati3982_lab9() );
+
+  
+}
+
+ADD_CMD("aprajapati3982_lab9", Lab9_aprajapati3982,"Test the new lab 9 function")
+
+
 int aprajapati3982_a4(int x);
 
 void A4_aprajapati3982(int action)
