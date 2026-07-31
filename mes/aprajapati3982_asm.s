@@ -226,6 +226,10 @@ busy_delay:
 .data
 a4_is_running: .word 0
 a4_button_count: .word 0
+a4_num_to_skip: .word 0
+a4_direction: .word 1
+a4_current_led: .word 0
+a4_tick_count: .word 0
 
 
 @ Assembly file ended by single .end directive on its own line
