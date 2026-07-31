@@ -238,6 +238,14 @@ aprajapati3982_a4_tick:
     @ Turn current LED on
     bl BSP_LED_On
 
+    @ Advance to next LED
+    ldr r1, =a4_current_led
+    ldr r0, [r1]
+
+    add r0, r0, #1
+
+    str r0, [r1]
+
     a4_skip:
 
     @ ***** End of our tick function
