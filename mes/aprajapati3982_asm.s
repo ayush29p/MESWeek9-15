@@ -112,9 +112,14 @@ aprajapati3982_a4:
     ldr r3, =a4_num_to_skip
     str r1, [r3]
 
-    @ Store direction
+    @ Store direction only if it is not 0
+    cmp r2, #0
+    beq skip_direction_store
+
     ldr r3, =a4_direction
     str r2, [r3]
+
+skip_direction_store:
 
     @ Turn off all LEDs
     mov r0, #0
@@ -235,8 +240,8 @@ aprajapati3982_a4_tick:
     ldr r1, =a4_current_led
     ldr r0, [r1]
 
-    @ Turn current LED OFF
-    bl BSP_LED_Off
+    @ Toggle current LED
+    bl BSP_LED_Toggle
 
     @ Load current LED again
     ldr r1, =a4_current_led
@@ -266,9 +271,6 @@ save_led:
     ldr r1, =a4_current_led
     str r0, [r1]
     ldr r0, [r1]
-
-    @ Turn current LED on
-    bl BSP_LED_On
 
     a4_skip:
 
