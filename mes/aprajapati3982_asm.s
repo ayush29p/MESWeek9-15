@@ -235,16 +235,40 @@ aprajapati3982_a4_tick:
     ldr r1, =a4_current_led
     ldr r0, [r1]
 
-    @ Turn current LED on
-    bl BSP_LED_On
+    @ Turn current LED OFF
+    bl BSP_LED_Off
 
-    @ Advance to next LED
+    @ Load current LED again
     ldr r1, =a4_current_led
     ldr r0, [r1]
 
-    add r0, r0, #1
+    @ Load direction
+    ldr r2, =a4_direction
+    ldr r2, [r2]
 
+    cmp r2, #1
+    beq forward
+
+backward:
+    sub r0, r0, #1
+    cmp r0, #0
+    bge save_led
+    mov r0, #7
+    b save_led
+
+forward:
+    add r0, r0, #1
+    cmp r0, #8
+    blt save_led
+    mov r0, #0
+
+save_led:
+    ldr r1, =a4_current_led
     str r0, [r1]
+    ldr r0, [r1]
+
+    @ Turn current LED on
+    bl BSP_LED_On
 
     a4_skip:
 
