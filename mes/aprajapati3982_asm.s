@@ -214,20 +214,29 @@ aprajapati3982_a4_tick:
     cmp r0, #0
     ble a4_skip
 
-        @ This part below is skipped if A4 is NOT running. You will want to
-        @ keep all your A4 logic inside here.
-        @ DO NOT PUT LOGIC FOR A4 ABOVE THIS LINE -----------------------------
+        @ Increment tick counter
+        ldr r1, =a4_tick_count
+        ldr r0, [r1]
+        add r0, r0, #1
+        str r0, [r1]
 
-        @ Even within this logic, you should still take a philosopy of check
-        @ things, do things, and store things - do not use delays of any sort,
-        @ and only use loops if they are bounded (that is, guaranteed to end)
+    @ Compare tick count with num_to_skip
+    ldr r2, =a4_num_to_skip
+    ldr r2, [r2]
 
-        @ ***** Do something
-        mov r0, #0
-        bl BSP_LED_Toggle
+    cmp r0, r2
+    blt a4_skip
 
-        @ DO NOT PUT LOGIC FOR A4 BELOW THIS LINE -----------------------------
-        @ End of A4 skipped logic. Do not add logic below here.
+    @ Reset tick counter
+    mov r0, #0
+    str r0, [r1]
+
+    @ Get current LED
+    ldr r1, =a4_current_led
+    ldr r0, [r1]
+
+    @ Turn current LED on
+    bl BSP_LED_On
 
     a4_skip:
 
