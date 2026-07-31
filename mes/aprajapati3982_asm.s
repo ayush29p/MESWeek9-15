@@ -90,7 +90,7 @@ aprajapati3982_lab9:
     .global aprajapati3982_a4
     .type   aprajapati3982_a4, %function
 
-@ Function Declaration : int aprajapati3982_a4(int x)
+@ Function Declaration : int aprajapati3982_a4(int status, int num_to_skip, int direction)
 @
 @ Input: Document this
 @ Returns: Document this
@@ -104,9 +104,18 @@ aprajapati3982_a4:
     @ aside from storing the parameters your A4 logic needs to run.
 
     @ Store the value we received indicating the running state
-    ldr r1, =a4_is_running
-    str r0, [r1]
+    ldr r3, =a4_is_running
+    str r0, [r3]
 
+    @ Store num_to_skip
+    ldr r3, =a4_num_to_skip
+    str r1, [r3]
+
+    @ Store direction
+    ldr r3, =a4_direction
+    str r2, [r3]
+
+    mov r0, #0
     bx lr
     .size   aprajapati3982_a4, .-aprajapati3982_a4
 

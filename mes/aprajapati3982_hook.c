@@ -102,7 +102,7 @@ void Lab9_aprajapati3982(int action)
 ADD_CMD("aprajapati3982_lab9", Lab9_aprajapati3982,"Test the new lab 9 function")
 
 
-int aprajapati3982_a4(int x);
+int aprajapati3982_a4(int status, int num_to_skip, int direction);
 
 void A4_aprajapati3982(int action)
 {
@@ -117,16 +117,26 @@ void A4_aprajapati3982(int action)
   }
 
   int fetch_status;
-  uint32_t a4_start;
+  uint32_t status;
+  uint32_t num_to_skip;
+  int32_t direction;
 
-  fetch_status = fetch_uint32_arg(&a4_start);
+  // Status
+  fetch_status = fetch_uint32_arg(&status);
+  if (fetch_status)
+      status = 1;
 
-  if (fetch_status) {
-    a4_start = 1;
-  }
+  // Number of ticks to skip
+  fetch_status = fetch_uint32_arg(&num_to_skip);
+  if (fetch_status)
+      num_to_skip = 0;
 
+  // Direction
+  fetch_status = fetch_int32_arg(&direction);
+  if (fetch_status)
+      direction = 1;
 
-  printf("aprajapati3982_a4 returned: %d\n", aprajapati3982_a4(a4_start) );
+  printf("aprajapati3982_a4 returned: %d\n", aprajapati3982_a4(status, num_to_skip, direction) );
 }
 
 ADD_CMD("aprajapati3982_a4", A4_aprajapati3982,"Test the A4 function")
