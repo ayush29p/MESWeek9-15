@@ -98,12 +98,13 @@ aprajapati3982_lab9:
 
 @ Here is the actual function
 aprajapati3982_a4:
+    push {lr}
 
     @ This function only exists to start / initialize your A4
     @ logic working. No actions should be taken in this logic,
     @ aside from storing the parameters your A4 logic needs to run.
 
-    @ Store the value we received indicating the running state
+    @ Store status
     ldr r3, =a4_is_running
     str r0, [r3]
 
@@ -115,7 +116,34 @@ aprajapati3982_a4:
     ldr r3, =a4_direction
     str r2, [r3]
 
+    @ Turn off all LEDs
     mov r0, #0
+    bl BSP_LED_Off
+
+    mov r0, #1
+    bl BSP_LED_Off
+
+    mov r0, #2
+    bl BSP_LED_Off
+
+    mov r0, #3
+    bl BSP_LED_Off
+
+    mov r0, #4
+    bl BSP_LED_Off
+
+    mov r0, #5
+    bl BSP_LED_Off
+
+    mov r0, #6
+    bl BSP_LED_Off
+
+    mov r0, #7
+    bl BSP_LED_Off
+
+    @ Return success
+    mov r0, #0
+    pop {lr}
     bx lr
     .size   aprajapati3982_a4, .-aprajapati3982_a4
 
