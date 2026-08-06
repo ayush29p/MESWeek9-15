@@ -1,5 +1,5 @@
 /*
- *  C to assembler menu hook - Lab 8 Version
+ *  C to assembler menu hook - Lab 10 Version
  *
  *  Modified by aprajapati3982
  * 
@@ -111,14 +111,21 @@ void Lab10_aprajapati3982(int action)
   if(action==CMD_SHORT_HELP) return;
   if(action==CMD_LONG_HELP) {
     printf("Lab 10\n\n"
-	   "This command tests new lab 8 function by aprajapati3982\n"
+	   "This command tests new lab 10 function by aprajapati3982\n"
 	   );
 
     return;
   }
 
-  printf("Initializing Watchdog\n");
-  mes_InitIWDG(9999);
+  int fetch_status;
+  uint32_t reload;
+
+  fetch_status = fetch_uint32_arg(&reload);
+  if(fetch_status)
+    reload = 9999;
+
+  printf("Initializing Watchdog (%lu)\n", reload);
+  mes_InitIWDG(reload);
 
   printf("Starting Watchdog\n");
   mes_IWDGStart();
@@ -165,5 +172,3 @@ void A4_aprajapati3982(int action)
 }
 
 ADD_CMD("aprajapati3982_a4", A4_aprajapati3982,"Test the A4 function")
-
-
