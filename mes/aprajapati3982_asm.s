@@ -384,6 +384,9 @@ aprajapati3982_a5_tick:
         @ Write the updated LED state back to GPIOE.
         strh r0, [r1]
 
+        @ Refresh the watchdog so it does not time out.
+        bl mes_IWDGRefresh
+
     @ End of A5 skipped logic.
     a5_skip:
 
