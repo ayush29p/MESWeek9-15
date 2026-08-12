@@ -17,7 +17,8 @@
 
 // A4 Interrupt Handlers - these are in aprajapati3982_asm.s
 void aprajapati3982_a4_btn(void);
-void aprajapati3982_a4_tick(void);
+void aprajapati3982_a5_btn(void);
+void aprajapati3982_a5_tick(void);
 
 // Timer tick hook for our timer interrupt
 // driven programming.
@@ -44,7 +45,7 @@ void aprajapati3982_tick(void)
   if (ticks > N)
   {
     ticks = 0;
-    aprajapati3982_a4_tick();
+    aprajapati3982_a5_tick();
   }
 
 
@@ -172,3 +173,43 @@ void A4_aprajapati3982(int action)
 }
 
 ADD_CMD("aprajapati3982_a4", A4_aprajapati3982,"Test the A4 function")
+
+int aprajapati3982_a5(int status, int num_to_skip, int direction);
+
+void A5_aprajapati3982(int action)
+{
+    if(action==CMD_SHORT_HELP) return;
+
+    if(action==CMD_LONG_HELP) {
+        printf("Assignment 5 Test\n\n"
+               "This command tests new A5 function by aprajapati3982\n"
+               );
+
+        return;
+    }
+
+    int fetch_status;
+    uint32_t status;
+    uint32_t num_to_skip;
+    int32_t direction;
+
+    // Status
+    fetch_status = fetch_uint32_arg(&status);
+    if (fetch_status)
+        status = 1;
+
+    // Number of ticks to skip
+    fetch_status = fetch_uint32_arg(&num_to_skip);
+    if (fetch_status)
+        num_to_skip = 0;
+
+    // Direction
+    fetch_status = fetch_int32_arg(&direction);
+    if (fetch_status)
+        direction = 1;
+
+    printf("aprajapati3982_a5 returned: %d\n",
+           aprajapati3982_a5(status, num_to_skip, direction));
+}
+
+ADD_CMD("aprajapati3982_a5", A5_aprajapati3982,"Test the A5 function")

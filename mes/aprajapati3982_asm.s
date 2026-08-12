@@ -152,6 +152,60 @@ skip_direction_store:
     bx lr
     .size   aprajapati3982_a4, .-aprajapati3982_a4
 
+@ Function Declaration : int aprajapati3982_a5(int status, int num_to_skip, int direction)
+@
+@ Input:
+@   r0 = status
+@   r1 = number of ticks to skip
+@   r2 = direction
+@
+@ Returns:
+@   r0 = 0 on success
+@
+@ This function initializes the A5 state.
+@ Watchdog functionality will be added in a later step.
+
+.global aprajapati3982_a5
+.type   aprajapati3982_a5, %function
+
+aprajapati3982_a5:
+    push {lr}
+
+    @ Store whether A5 should be running.
+    ldr r3, =a5_running
+    str r0, [r3]
+
+    @ Turn off all LEDs before starting A5.
+    mov r0, #0
+    bl BSP_LED_Off
+
+    mov r0, #1
+    bl BSP_LED_Off
+
+    mov r0, #2
+    bl BSP_LED_Off
+
+    mov r0, #3
+    bl BSP_LED_Off
+
+    mov r0, #4
+    bl BSP_LED_Off
+
+    mov r0, #5
+    bl BSP_LED_Off
+
+    mov r0, #6
+    bl BSP_LED_Off
+
+    mov r0, #7
+    bl BSP_LED_Off
+
+    @ Return success.
+    mov r0, #0
+    pop {lr}
+    bx lr
+
+.size   aprajapati3982_a5, .-aprajapati3982_a5
 
 .global aprajapati3982_a4_btn
 .type   aprajapati3982_a4_btn, %function
@@ -279,6 +333,47 @@ save_led:
     bx lr
     .size   aprajapati3982_a4_tick, .-aprajapati3982_a4_tick
 
+.global aprajapati3982_a5_tick
+.type   aprajapati3982_a5_tick, %function
+
+@ Function Declaration : void aprajapati3982_a5_tick(void)
+@
+@ Input: None
+@ Returns: Nothing
+@ 
+@ This function is called from the timer interrupt.
+@ A5 logic only executes while a5_running is non-zero.
+
+@ Here is the actual function
+aprajapati3982_a5_tick:
+    push {lr}
+ 
+    @ Check whether A5 is currently running.
+    ldr r1, =a5_running
+    ldr r0, [r1]
+
+    cmp r0, #0
+    ble a5_skip
+
+        @ This part below is skipped if A5 is NOT running. You will want to
+        @ keep all your A5 logic inside here.
+        @ DO NOT PUT LOGIC FOR A5 ABOVE THIS LINE -----------------------------
+
+        @ Temporary test required by the assignment.
+        @ This will later be replaced with direct LED addressing.
+
+        @ This is only temporary to test your work
+        mov r0, #0
+        bl BSP_LED_Toggle
+
+        @ End of A5 skipped logic.
+
+    a5_skip:
+
+    @ ***** Exit
+    pop {lr}
+    bx lr
+    .size   aprajapati3982_a5_tick, .-aprajapati3982_a5_tick
 
 @ Function Declaration : int busy_delay(int cycles)
 @
@@ -302,8 +397,8 @@ busy_delay:
 
 
 @ Here is another data section, we will use it for some key interrupt items
-@ We will put all necessary data for A4 in this block
 .data
+//Assignment 4
 a4_is_running: .word 0
 a4_button_count: .word 0
 a4_num_to_skip: .word 0
@@ -311,6 +406,8 @@ a4_direction: .word 1
 a4_current_led: .word 0
 a4_tick_count: .word 0
 
+//Assignment 5
+a5_running:  .word 0
 
 @ Assembly file ended by single .end directive on its own line
 .end
