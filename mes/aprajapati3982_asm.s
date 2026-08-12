@@ -175,6 +175,13 @@ aprajapati3982_a5:
     ldr r3, =a5_running
     str r0, [r3]
 
+    @ Initialize the independent watchdog with a reload value of 8000.
+    mov r0, #8000
+    bl mes_InitIWDG
+
+    @ Start the watchdog immediately after initialization.
+    bl mes_IWDGStart
+
     @ Turn off all LEDs before starting A5.
     mov r0, #0
     bl BSP_LED_Off
