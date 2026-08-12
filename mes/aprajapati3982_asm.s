@@ -1,4 +1,4 @@
-@ Assembly File - Lab 8 Version
+@ Assembly File - Assignment 5 Version
 @ by aprajapati3982
 @
 @ NOTE THERE IS A DATA SECTION AT THE END OF THIS FILE FOR ASSIGNMENT 4
@@ -362,12 +362,22 @@ aprajapati3982_a5_tick:
         @ Temporary test required by the assignment.
         @ This will later be replaced with direct LED addressing.
 
-        @ This is only temporary to test your work
-        mov r0, #0
-        bl BSP_LED_Toggle
+        @ Directly access the GPIOE output register.
+        @ GPIOE ODR address is 0x48001014.
+        ldr r1, =LEDaddress
+        ldr r1, [r1]
 
-        @ End of A5 skipped logic.
+        @ Read the current 16-bit LED output state.
+        ldrh r0, [r1]
 
+        @ Toggle the four A5 LEDs in one operation.
+        @ 0x5500 corresponds to the four LEDs required by A5.
+        eor r0, r0, #0x5500
+
+        @ Write the updated LED state back to GPIOE.
+        strh r0, [r1]
+
+    @ End of A5 skipped logic.
     a5_skip:
 
     @ ***** Exit
