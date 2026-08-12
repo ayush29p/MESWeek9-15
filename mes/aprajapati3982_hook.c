@@ -1,5 +1,5 @@
 /*
- *  C to assembler menu hook - Lab 10 Version
+ *  C to assembler menu hook - Assignment 5 version
  *
  *  Modified by aprajapati3982
  * 
@@ -58,7 +58,7 @@ void aprajapati3982_tick(void)
 void aprajapati3982_btn(void)
 {
   // For now, just toggle an LED to prove the button press was noticed.
-  aprajapati3982_a4_btn();
+  aprajapati3982_a5_btn();
 }
 
 int aprajapati3982_lab8(void);

@@ -1,13 +1,6 @@
 @ Assembly File - Assignment 5 Version
 @ by aprajapati3982
-@
-@ NOTE THERE IS A DATA SECTION AT THE END OF THIS FILE FOR ASSIGNMENT 4
-@ USE THAT DATA SECTION FOR ANY DATA YOU NEED, DO NOT ADD ANOTHER.
-
-@ This is a comment. Anything after an @ symbol is ignored.
-@@ This is also a comment. Some people use double @@ symbols. 
-
-
+ 
     .code   16              @ This directive selects the instruction set being generated. 
                             @ The value 16 selects Thumb, with the value 32 selecting ARM.
 
@@ -214,34 +207,30 @@ aprajapati3982_a5:
 
 .size   aprajapati3982_a5, .-aprajapati3982_a5
 
-.global aprajapati3982_a4_btn
-.type   aprajapati3982_a4_btn, %function
+.global aprajapati3982_a5_btn
+.type   aprajapati3982_a5_btn, %function
 
-@ Function Declaration : void aprajapati3982_a4_btn(void)
+@ Function Declaration : void aprajapati3982_a5_btn(void)
 @
 @ Input: None
 @ Returns: Nothing
-@ 
-@ Reminder - this requires the button has been initialized as an interrupt
-@ in main.c using BSP_PB_Init(BUTTON_USER, BUTTON_MODE_EXTI)
-@ as well as requires a new function set up void EXTI0_IRQHandler(void)
+@
+@ The A5 button handler records that the user button
+@ has been pressed. The A5 tick function uses this flag
+@ to stop refreshing the watchdog.
 
-@ Here is the actual function
-aprajapati3982_a4_btn:
+aprajapati3982_a5_btn:
     push {lr}
 
-    ldr r1, =a4_button_count        @ Get the address of the counter
-    ldr r0, [r1]                    @ Get the actual count
-    add r0, r0, #1                  @ Increment the count
-    and r0, #7                      @ Keep the count between 0 and 7
-    str r0, [r1]                    @ Store the new count
-
-    bl BSP_LED_Toggle               @ Toggle the current LED
+    @ Set the button-pressed flag.
+    ldr r1, =a5_btn_pressed
+    mov r0, #1
+    str r0, [r1]
 
     pop {lr}
     bx lr
-    .size   aprajapati3982_a4_btn, .-aprajapati3982_a4_btn
 
+.size   aprajapati3982_a5_btn, .-aprajapati3982_a5_btn
 
 .global aprajapati3982_a4_tick
 .type   aprajapati3982_a4_tick, %function
@@ -250,7 +239,6 @@ aprajapati3982_a4_btn:
 @
 @ Input: None
 @ Returns: Nothing
-@ 
 
 @ Here is the actual function
 aprajapati3982_a4_tick:
@@ -384,9 +372,17 @@ aprajapati3982_a5_tick:
         @ Write the updated LED state back to GPIOE.
         strh r0, [r1]
 
-        @ Refresh the watchdog so it does not time out.
+        @ Check whether the user button has been pressed.
+        ldr r1, =a5_btn_pressed
+        ldr r0, [r1]
+
+        @ If button has not been pressed, refresh the watchdog.
+        cmp r0, #0
+        bne a5_skip_watchdog
         bl mes_IWDGRefresh
 
+    a5_skip_watchdog:
+    
     @ End of A5 skipped logic.
     a5_skip:
 
@@ -399,7 +395,6 @@ aprajapati3982_a5_tick:
 @
 @ Input: r0 (i.e. r0 is how many cycles to delay)
 @ Returns: r0
-@ 
 
 @ Here is the actual function. DO NOT MODIFY THIS FUNCTION
 busy_delay:
@@ -428,6 +423,7 @@ a4_tick_count: .word 0
 
 //Assignment 5
 a5_running:  .word 0
+a5_btn_pressed: .word 0
 
 @ Assembly file ended by single .end directive on its own line
 .end
